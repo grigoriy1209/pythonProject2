@@ -16,5 +16,9 @@ Including another URLconf
 """
 
 from django.urls import path
+from cars.views import CarsListCreateView, CarsRetrieveUpdateDestroyView
 
-urlpatterns = []
+urlpatterns = [
+    path('cars', CarsListCreateView.as_view()),
+    path('cars/<int:pk>', CarsRetrieveUpdateDestroyView.as_view()),
+]
