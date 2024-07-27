@@ -1,54 +1,136 @@
+from django.db.models import Q
 from django.forms import model_to_dict
 from rest_framework import status
+from rest_framework.mixins import CreateModelMixin, ListModelMixin, RetrieveModelMixin, UpdateModelMixin, \
+    DestroyModelMixin
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from rest_framework.generics import GenericAPIView, ListCreateAPIView, RetrieveUpdateDestroyAPIView
 
+from cars.filter import car_filter
 from cars.models import CarsModel
+from cars.serializers import CarSerializer
 
 
-class CarsListCreateView(APIView):
-    def get(self, *args, **kwargs):
-        cars = CarsModel.objects.all()
-        res = [model_to_dict(car) for car in cars]
-        return Response(res, status.HTTP_200_OK)
+# class CarsListCreateView(GenericAPIView):
+#
+#     def get(self, *args, **kwargs):
+#         # qs = CarsModel.objects.filter(brand__in=['bmw', 'opel'], year__gte=2020).order_by('-year').reverse()
+#         # qs = CarsModel.objects.filter(brand__in=['bmw', 'opel'], year__gte=2020).order_by('year')
+#         # qs = CarsModel.objects.filter(Q(brand__in=['opel','bmw']) | Q(price=2000)).exclude(brand='bmw')
+#         qs = CarsModel.objects.all()
+#         # res = [model_to_dict(car) for car in cars]
+#         serializer = CarSerializer(qs, many=True)
+#         return Response(serializer.data, status.HTTP_200_OK)
+#
+#     def post(self, *args, **kwargs):
+#         data = self.request.data
+#         serializer = CarSerializer(data=data)
+#         # if not serializer.is_valid():
+#         #     return Response(serializer.errors, status.HTTP_400_BAD_REQUEST)
+#         serializer.is_valid(raise_exception=True)
+#         serializer.save()
+#         return Response(serializer.data, status.HTTP_201_CREATED)
+#
+#
+# class CarsRetrieveUpdateDestroyView(GenericAPIView):
+#     serializer_class = CarSerializer
+#     queryset = CarsModel.objects.all()
+#
+#     def get(self, *args, **kwargs):
+#         # pk = self.kwargs['pk']
+#         # try:
+#         #     car = CarsModel.objects.get(pk=pk)
+#         # except CarsModel.DoesNotExist:
+#         #     return Response(status=status.HTTP_404_NOT_FOUND)
+#         car = self.get_object()
+#         serializer = CarSerializer(car)
+#         return Response(serializer.data, status.HTTP_200_OK)
+#
+#     def put(self, *args, **kwargs):
+#         # pk = self.kwargs['pk']
+#         data = self.request.data
+#         # try:
+#         #     car = CarsModel.objects.get(pk=pk)
+#         # except CarsModel.DoesNotExist:
+#         #     return Response(status=status.HTTP_404_NOT_FOUND)
+#         car = self.get_object()
+#         serializer = CarSerializer(car, data=data)
+#         serializer.is_valid(raise_exception=True)
+#         serializer.save()
+#         return Response(serializer.data, status.HTTP_200_OK)
+#
+#     def patch(self, *args, **kwargs):
+#         # pk = self.kwargs['pk']
+#         data = self.request.data
+#         # try:
+#         #     car = CarsModel.objects.get(pk=pk)
+#         # except CarsModel.DoesNotExist:
+#         #     return Response(status=status.HTTP_404_NOT_FOUND)
+#         car = self.get_object()
+#         serializer = CarSerializer(car, data=data, partial=True)
+#         serializer.is_valid(raise_exception=True)
+#         serializer.save()
+#         return Response(serializer.data, status.HTTP_200_OK)
+#
+#     def delete(self, *args, **kwargs):
+#         # pk = self.kwargs['pk']
+#         # try:
+#         #     car = CarsModel.objects.get(pk=pk)
+#         #     car.delete()
+#         # except CarsModel.DoesNotExist:
+#         #     return Response(status=status.HTTP_404_NOT_FOUND)
+#         self.get_object().delete()
+#         return Response(status=status.HTTP_204_NO_CONTENT)
 
-    def post(self, *args, **kwargs):
-        data = self.request.data
-        car = CarsModel.objects.create(**data)
-        car_dict = model_to_dict(car)
-        return Response(car_dict, status.HTTP_201_CREATED)
+# class CarsListCreateView(GenericAPIView, CreateModelMixin, ListModelMixin):
+#     serializer_class = CarSerializer
+#     # queryset = CarsModel.objects.all()
+#
+#     def get_queryset(self):
+#         return car_filter(self.request.query_params)
+#
+#     def post(self, request, *args, **kwargs):
+#         return super().create(request, *args, **kwargs)
+#
+#     def get(self, request, *args, **kwargs):
+#         return super().list(request, *args, **kwargs)
+#
+#
+# class CarsRetrieveUpdateDestroyView(GenericAPIView, RetrieveModelMixin, DestroyModelMixin, UpdateModelMixin):
+#     serializer_class = CarSerializer
+#     queryset = CarsModel.objects.all()
+#
+#     def get(self, request, *args, **kwargs):
+#         return super().retrieve(request, *args, **kwargs)
+#
+#     def put(self, request, *args, **kwargs):
+#         return super().update(request, *args, **kwargs)
+#
+#     def patch(self, request, *args, **kwargs):
+#         return super().partial_update(request, *args, **kwargs)
+#
+#     def delete(self, request, *args, **kwargs):
+#         return super().destroy(request, *args, **kwargs)
 
 
-class CarsRetrieveUpdateDestroyView(APIView):
-    def get(self, *args, **kwargs):
-        pk = self.kwargs['pk']
-        try:
-            car = CarsModel.objects.get(pk=pk)
-        except CarsModel.DoesNotExist:
-            return Response(status=status.HTTP_404_NOT_FOUND)
-        return Response(model_to_dict(car), status.HTTP_200_OK)
+class CarsListCreateView(ListCreateAPIView):
+    serializer_class = CarSerializer
 
-    def put(self, *args, **kwargs):
-        pk = self.kwargs['pk']
-        data = self.request.data
-        try:
-            car = CarsModel.objects.get(pk=pk)
-        except CarsModel.DoesNotExist:
-            return Response(status=status.HTTP_404_NOT_FOUND)
-        car.brand = data['brand']
-        car.price = data['price']
-        car.year = data['year']
-        car.save()
-        return Response(model_to_dict(car), status.HTTP_200_OK)
+    def get_queryset(self):
+        return car_filter(self.request.query_params)
 
-    # def patch(self, *args, **kwargs):
-    #     return Response({'message': 'Hello World! patch'})
 
-    def delete(self, *args, **kwargs):
-        pk = self.kwargs['pk']
-        try:
-            car = CarsModel.objects.get(pk=pk)
-            car.delete()
-        except CarsModel.DoesNotExist:
-            return Response(status=status.HTTP_404_NOT_FOUND)
-        return Response(status=status.HTTP_204_NO_CONTENT)
+class CarsRetrieveUpdateDestroyView(RetrieveUpdateDestroyAPIView):
+    serializer_class = CarSerializer
+    queryset = CarsModel.objects.all()
+
+
+
+
+
+
+
+
+
+

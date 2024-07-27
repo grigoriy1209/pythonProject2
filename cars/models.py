@@ -1,7 +1,10 @@
 from django.db import models
 
+from core.models import BaseModel
 
-class CarsModel(models.Model):
+
+class CarsModel(BaseModel):
+
     class Meta:
         db_table = 'cars'
     brand = models.CharField(max_length=255)
