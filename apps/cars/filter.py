@@ -1,8 +1,8 @@
 from django.http import QueryDict
 from rest_framework.exceptions import ValidationError
 
-from cars.models import CarsModel
-from cars.serializers import CarSerializer
+from apps.cars.models import CarsModel
+from apps.cars.serializers import CarSerializer
 
 
 def car_filter(query:QueryDict):

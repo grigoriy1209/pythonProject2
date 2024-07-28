@@ -1,5 +1,6 @@
 .venv
 .idea
+.env
 .idea/.gitignore
 .idea/dataSources
 .idea*
