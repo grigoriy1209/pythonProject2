@@ -7,7 +7,7 @@ from apps.cars.models import CarsModel
 class CarSerializer(serializers.ModelSerializer):
     class Meta:
         model = CarsModel
-        fields = ('id', 'brand', 'price', 'year', 'created_at', 'updated_at')
+        fields = ('id', 'brand', 'price', 'year', 'body_type', 'created_at', 'updated_at')
 
     # def validate(self, data):
     #     if data['price'] == data['year']:
