@@ -7,6 +7,7 @@ from core.models import BaseModel
 
 from apps.auto_parks.models import AutoPark
 from apps.cars.choices.body_type_choices import BodyTypeChoices
+from apps.cars.managers import CarManager
 
 
 class CarsModel(BaseModel):
@@ -20,3 +21,5 @@ class CarsModel(BaseModel):
     year = models.IntegerField(validators=(V.MinValueValidator(1990), V.MaxValueValidator(datetime.now().year)))
     body_type = models.CharField(max_length=10, choices=BodyTypeChoices.choices)
     auto_park = models.ForeignKey(AutoPark, on_delete=models.CASCADE, related_name='cars')
+
+    objects = CarManager()
