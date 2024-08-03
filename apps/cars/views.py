@@ -1,5 +1,7 @@
+from typing import Type
+
 from rest_framework.generics import CreateAPIView, ListAPIView, ListCreateAPIView, RetrieveUpdateDestroyAPIView
-from rest_framework.pagination import PageNumberPagination
+from rest_framework.permissions import AllowAny, IsAuthenticated
 
 from core.paginations import PagePagination
 
@@ -10,13 +12,25 @@ from apps.cars.serializers import CarSerializer
 
 class CarsListView(ListAPIView):
     serializer_class = CarSerializer
-    queryset = CarsModel.objects.less_then_year(2000)
+    queryset = CarsModel.objects.all()
     filterset_class = CarFilter
+    permission_classes = (IsAuthenticated,)
+
+    def get_queryset(self):
+        print(self.request.user, '!!!!!!!!!!!!!!')
+        return super().get_queryset()
 
 
 class CarsRetrieveUpdateDestroyView(RetrieveUpdateDestroyAPIView):
     serializer_class = CarSerializer
     queryset = CarsModel.objects.all()
+
+    def get_permissions(self):
+        if self.request.method == 'DELETE':
+            return (IsAuthenticated(),)
+        return (AllowAny(),)
+
+
 
 
 
