@@ -6,7 +6,7 @@ from core.models import BaseModel
 from apps.users.managers import UserManager
 
 
-class UserModel(AbstractBaseUser, PermissionsMixin,BaseModel):
+class UserModel(AbstractBaseUser, PermissionsMixin, BaseModel):
     class Meta:
         db_table = 'auth_user'
         ordering = ['id']
@@ -26,6 +26,6 @@ class ProfileModel(BaseModel):
     name = models.CharField(max_length=20)
     surname = models.CharField(max_length=20)
     age = models.IntegerField()
-    user = models.OneToOneField(UserModel, on_delete=models.CASCADE,related_name='profile')
+    user = models.OneToOneField(UserModel, on_delete=models.CASCADE, related_name='profile')
 
 
