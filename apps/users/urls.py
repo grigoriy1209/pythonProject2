@@ -7,4 +7,4 @@ urlpatterns = [
     path('/<int:pk>/block', UserBlockView.as_view()),
     path('/<int:pk>/un_block', UserUnblockView.as_view()),
     path('/<int:pk>/admins', UserToAdminView.as_view()),
-]
+    ]
