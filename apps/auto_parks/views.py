@@ -2,6 +2,8 @@ from rest_framework import status
 from rest_framework.generics import GenericAPIView, ListCreateAPIView
 from rest_framework.response import Response
 
+from core.permissions.is_admin_or_write_only import IsAdminOrWriteOnly
+
 from apps.auto_parks.models import AutoPark
 from apps.auto_parks.serializers import AutoParksSerializer
 from apps.cars.serializers import CarSerializer
@@ -10,6 +12,7 @@ from apps.cars.serializers import CarSerializer
 class AutoParksListCreateView(ListCreateAPIView):
     serializer_class = AutoParksSerializer
     queryset = AutoPark.objects.all()
+    permission_classes = (IsAdminOrWriteOnly,)
 
 
 class AutoParksAddCarView(GenericAPIView):
