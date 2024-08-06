@@ -7,4 +7,6 @@ urlpatterns = [
   path('/<int:pk>', CarsRetrieveUpdateDestroyView.as_view()),
   path('/<int:pk>/photo', CarAddFotoView.as_view()),
 
+  # path('/test', TestEmailView.as_view())
+
  ]

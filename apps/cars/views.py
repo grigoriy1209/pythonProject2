@@ -1,11 +1,12 @@
-from rest_framework.generics import ListAPIView, RetrieveUpdateDestroyAPIView, UpdateAPIView
+from rest_framework import status
+from rest_framework.generics import ListAPIView, RetrieveUpdateDestroyAPIView, UpdateAPIView, GenericAPIView
 from rest_framework.permissions import AllowAny, IsAuthenticated
-
-from core.permissions.is_super_user_permission import IsSuperUserPermission
+from rest_framework.response import Response
 
 from apps.cars.filter import CarFilter
 from apps.cars.models import CarsModel
 from apps.cars.serializers import CarFotoSerializer, CarSerializer
+from core.services.email_service import EmailService
 
 
 class CarsListView(ListAPIView):
@@ -36,6 +37,13 @@ class CarAddFotoView(UpdateAPIView):
         car.photo.delete()
         super().perform_update(serializer)
 
+
+# class TestEmailView(GenericAPIView):
+#     permission_classes = (AllowAny,)
+#
+#     def get(self, *args, **kwargs):
+#         EmailService.send_test()
+#         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 
