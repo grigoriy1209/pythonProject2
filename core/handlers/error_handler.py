@@ -5,8 +5,9 @@ from rest_framework.views import exception_handler
 
 def error_handler(exc: Exception, context: dict) -> Response:
     handlers = {
-        'JwtException': '_jwt_validation_error_handler'
+        'JwtException': _jwt_validation_error_handler
     }
+
     response = exception_handler(exc, context)
     exc_class = exc.__class__.__name__
 
