@@ -1,15 +1,14 @@
 from datetime import timedelta
 from typing import Type
+from django.contrib.auth import get_user_model
 
 from rest_framework_simplejwt.tokens import BlacklistMixin, Token
 from rest_framework.generics import get_object_or_404
 from core.enums.action_token_enum import ActionTokenEnum
-from core.exceptions.jwt_exception import JWTException
+from core.exceptions.jwt_exception import JwtException
+from core.dataclasses.user_dataclass import User
 
 ActionTokenClassType = Type[BlacklistMixin | Token]
-
-from django.contrib.auth import get_user_model
-from core.dataclasses.user_dataclass import User
 
 
 UserModel: User = get_user_model()
@@ -41,7 +40,7 @@ class JWTService:
             token_res = token_class(token)
             token_res.check_blacklist()
         except Exception:
-            raise JWTException
+            raise JwtException
 
         token_res.blacklist()
         user_id = token_res.payload.get('user_id')
