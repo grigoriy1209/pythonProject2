@@ -1,11 +1,14 @@
 from typing import Type
+
 from django.contrib.auth import get_user_model
 
-from rest_framework_simplejwt.tokens import BlacklistMixin, Token
 from rest_framework.generics import get_object_or_404
+
+from rest_framework_simplejwt.tokens import BlacklistMixin, Token
+
+from core.dataclasses.user_dataclass import User
 from core.enums.action_token_enum import ActionTokenEnum
 from core.exceptions.jwt_exception import JwtException
-from core.dataclasses.user_dataclass import User
 
 ActionTokenClassType = Type[BlacklistMixin | Token]
 

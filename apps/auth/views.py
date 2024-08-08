@@ -1,15 +1,16 @@
+from django.contrib.auth import get_user_model
+
 from rest_framework import status
 from rest_framework.generics import GenericAPIView, get_object_or_404
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 
+from core.dataclasses.user_dataclass import User
+from core.services.email_service import EmailService
+from core.services.jwt_service import ActivateToken, JWTService, RecoverToken
+
 from apps.auth.serializers import EmailSerializer, PasswordSerializer
 from apps.users.serializers import UserSerializer
-from core.services.email_service import EmailService
-from core.services.jwt_service import JWTService, ActivateToken, RecoverToken
-
-from django.contrib.auth import get_user_model
-from core.dataclasses.user_dataclass import User
 
 UserModel: User = get_user_model()
 

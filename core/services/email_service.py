@@ -1,10 +1,10 @@
 import os
 
-from django.template.loader import get_template
 from django.core.mail import EmailMultiAlternatives
+from django.template.loader import get_template
 
 from core.dataclasses.user_dataclass import User
-from core.services.jwt_service import JWTService, ActivateToken, RecoverToken
+from core.services.jwt_service import ActivateToken, JWTService, RecoverToken
 
 
 class EmailService:

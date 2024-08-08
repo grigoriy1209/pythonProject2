@@ -1,6 +1,7 @@
+from django.contrib.auth import get_user_model
+
 from rest_framework import serializers
 
-from django.contrib.auth import get_user_model
 from core.dataclasses.user_dataclass import User
 
 UserModel: User = get_user_model()

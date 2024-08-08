@@ -1,12 +1,13 @@
 from rest_framework import status
-from rest_framework.generics import ListAPIView, RetrieveUpdateDestroyAPIView, UpdateAPIView, GenericAPIView
+from rest_framework.generics import GenericAPIView, ListAPIView, RetrieveUpdateDestroyAPIView, UpdateAPIView
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
+
+from core.services.email_service import EmailService
 
 from apps.cars.filter import CarFilter
 from apps.cars.models import CarsModel
 from apps.cars.serializers import CarFotoSerializer, CarSerializer
-from core.services.email_service import EmailService
 
 
 class CarsListView(ListAPIView):
