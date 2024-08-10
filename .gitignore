@@ -1,6 +1,6 @@
 .venv
 .idea
-.env
+.env/
 mysql
 
 .idea/material_theme_project_new.xml
