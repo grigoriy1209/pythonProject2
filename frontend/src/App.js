@@ -9,13 +9,8 @@ const App = () => {
   }, []);
     return (
         <div>
-            {
-                cars.map(car =>
-                    <div key={car.id}>
-                        {car.id}--{car.brand}--{car.price}--{car.year}
-                   </div>
-                )
-            }
+            <h1>Cars</h1>
+            {cars.map(car=><div key={car.id}>{car.id} -- {car.brand}</div>)}
         </div>
     );
 };
