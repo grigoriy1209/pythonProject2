@@ -12,17 +12,18 @@ UserModel = get_user_model()
 
 class UserListCreateView(ListCreateAPIView):
     permission_classes = (AllowAny,)
+    queryset = UserModel.objects.all()
     serializer_class = UserSerializer
 
 
 class UserBlockView(GenericAPIView):
-    queryset = UserModel.objects.exclude()
+    serializer_class = UserSerializer
     permission_classes = (IsAdminUser,)
 
     def get_queryset(self):
         return UserModel.objects.exclude(pk=self.request.user.pk)
 
-    def patch(self,*args, **kwargs):
+    def patch(self, *args, **kwargs):
         user = self.get_object()
 
         if user.is_active:
@@ -35,11 +36,12 @@ class UserBlockView(GenericAPIView):
 
 class UserUnblockView(GenericAPIView):
     permission_classes = (IsAdminUser,)
+    serializer_class = UserSerializer
 
     def get_queryset(self):
         return UserModel.objects.exclude(pk=self.request.user.pk)
 
-    def patch(self,*args, **kwargs):
+    def patch(self, *args, **kwargs):
         user = self.get_object()
 
         if not user.is_active:
@@ -52,6 +54,7 @@ class UserUnblockView(GenericAPIView):
 
 class UserToAdminView(GenericAPIView):
     permission_classes = (IsAdminUser,)
+    serializer_class = UserSerializer
 
     def get_queryset(self):
         return UserModel.objects.exclude(pk=self.request.user.pk)
