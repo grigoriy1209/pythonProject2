@@ -4,7 +4,7 @@ SWAGGER_SETTINGS = {
             'type': 'apiKey',
             'name': 'Authorization',
             "in": 'header'
-        }
+      }
     },
     'USE_SESSION_AUTH': None
-}
+ }
