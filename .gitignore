@@ -1,6 +1,6 @@
 .venv
 .idea
-.env
 mysql
 moved/
 
+.env
