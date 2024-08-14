@@ -22,7 +22,10 @@ class CarsListView(ListAPIView):
     filterset_class = CarFilter
     permission_classes = (AllowAny,)
 
-
+@method_decorator(name='get', decorator=swagger_auto_schema(security=[]))
+@method_decorator(name='put', decorator=swagger_auto_schema(security=[]))
+@method_decorator(name='patch', decorator=swagger_auto_schema(security=[]))
+@method_decorator(name='delete', decorator=swagger_auto_schema(security=[]))
 class CarsRetrieveUpdateDestroyView(RetrieveUpdateDestroyAPIView):
     """
       get:
@@ -42,8 +45,11 @@ class CarsRetrieveUpdateDestroyView(RetrieveUpdateDestroyAPIView):
             return (IsAuthenticated(),)
         return (AllowAny(),)
 
-
+@method_decorator(name='put', decorator=swagger_auto_schema(security=[]))
 class CarAddFotoView(UpdateAPIView):
+    """"
+    Car foto update
+    """
     permission_classes = (AllowAny,)
     serializer_class = CarFotoSerializer
     queryset = CarsModel.objects.all()
