@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     'apps.users',
     'apps.auto_parks',
     'apps.cars',
+    'apps.chat',
 ]
 
 MIDDLEWARE = [
@@ -78,6 +79,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'configs.wsgi.application'
+ASGI_APPLICATION = 'configs.asgi.application'
 
 
 # Database
