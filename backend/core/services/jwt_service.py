@@ -29,6 +29,10 @@ class RecoverToken(ActionToken):
     token_type = ActionTokenEnum.RECOVERY.token_type
     lifetime = ActionTokenEnum.RECOVERY.lifetime
 
+class SocketToken(ActionToken):
+    token_type = ActionTokenEnum.SOCKET.token_type
+    lifetime = ActionTokenEnum.SOCKET.lifetime
+
 
 class JWTService:
 

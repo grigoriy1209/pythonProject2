@@ -37,6 +37,7 @@ AUTH_USER_MODEL = 'users.UserModel'
 # Application definition
 
 INSTALLED_APPS = [
+    'daphne',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.staticfiles',
