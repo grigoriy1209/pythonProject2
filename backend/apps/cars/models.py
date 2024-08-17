@@ -15,15 +15,14 @@ class CarsModel(BaseModel):
 
     class Meta:
         db_table = 'cars'
-        ordering = ('id',)
+        ordering = ('-id',)
 
     brand = models.CharField(max_length=10, validators=(V.MinLengthValidator(2), ))
     price = models.IntegerField(validators=(V.MinValueValidator(0), V.MaxValueValidator(1_000_000)))
     year = models.IntegerField(validators=(V.MinValueValidator(1990), V.MaxValueValidator(datetime.now().year)))
     body_type = models.CharField(max_length=10, choices=BodyTypeChoices.choices)
-    auto_park = models.ForeignKey(AutoPark, on_delete=models.CASCADE, related_name='cars')
-    photo = models.ImageField(upload_to=FileService.upload_car_photo, blank=True, validators=(
-        V.FileExtensionValidator(['jpg', 'jpeg']),
-    ))
-
+    # auto_park = models.ForeignKey(AutoPark, on_delete=models.CASCADE, related_name='cars')
+    # photo = models.ImageField(upload_to=FileService.upload_car_photo, blank=True, validators=(
+    #     V.FileExtensionValidator(['jpg', 'jpeg']),
+    # ))
     objects = CarManager()
