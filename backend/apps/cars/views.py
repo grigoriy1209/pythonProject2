@@ -8,7 +8,7 @@ from rest_framework.generics import (
     RetrieveUpdateDestroyAPIView,
     UpdateAPIView,
 )
-from rest_framework.permissions import AllowAny, IsAuthenticated
+from rest_framework.permissions import AllowAny, IsAuthenticated, IsAuthenticatedOrReadOnly
 from rest_framework.response import Response
 
 from drf_yasg.utils import swagger_auto_schema
@@ -26,7 +26,7 @@ class CarsListView(ListCreateAPIView):
     serializer_class = CarSerializer
     queryset = CarsModel.objects.all()
     filterset_class = CarFilter
-    permission_classes = (AllowAny,)
+    permission_classes = (IsAuthenticatedOrReadOnly,)
     pagination_class = None
 #
 # @method_decorator(name='get', decorator=swagger_auto_schema(security=[]))
@@ -34,23 +34,24 @@ class CarsListView(ListCreateAPIView):
 # @method_decorator(name='patch', decorator=swagger_auto_schema(security=[]))
 # @method_decorator(name='delete', decorator=swagger_auto_schema(security=[]))
 # class CarsRetrieveUpdateDestroyView(RetrieveUpdateDestroyAPIView):
-#     """
-#       get:
-#          get car details
-#       put:
-#         update car
-#       patch:
-#         partial update car
-#       delete:
-#         delete car
-#     """
-#     serializer_class = CarSerializer
-#     queryset = CarsModel.objects.all()
-#
-#     def get_permissions(self):
-#         if self.request.method == 'DELETE':
-#             return (IsAuthenticated(),)
-#         return (AllowAny(),)
+    """
+      get:
+         get car details
+      put:
+        update car
+      patch:
+        partial update car
+      delete:
+        delete car
+    """
+    # serializer_class = CarSerializer
+    # queryset = CarsModel.objects.all()
+    # permission_classes = (IsAuthenticated,)
+
+    # def get_permissions(self):
+    #     if self.request.method == 'DELETE':
+    #         return (IsAuthenticated(),)
+    #     return (AllowAny(),)
 #
 # @method_decorator(name='put', decorator=swagger_auto_schema(security=[]))
 # class CarAddFotoView(UpdateAPIView):
